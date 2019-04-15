@@ -1,0 +1,26 @@
+{
+  "name": "gabe-reviews-proxy",
+  "version": "1.0.0",
+  "description": "Proxy server for \"Reviews\" component in HackReactor FEC project.",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rickadviser/gabe-reviews-proxy.git"
+  },
+  "keywords": [],
+  "author": "Gabor Szekely <gabor_szekely@hotmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rickadviser/gabe-reviews-proxy/issues"
+  },
+  "homepage": "https://github.com/rickadviser/gabe-reviews-proxy#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "http-proxy": "^1.17.0"
+  }
+}
