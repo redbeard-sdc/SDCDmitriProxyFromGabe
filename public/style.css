@@ -21,7 +21,7 @@ body {
 
 .top__wrapper {
   background-color: white;
-  padding-top: 70px;
+  padding-top: 20px;
   width: 100% !important;
   display: flex;
   flex-direction: column;

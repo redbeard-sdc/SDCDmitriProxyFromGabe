@@ -18,7 +18,11 @@ app.all("/api/*", (req, res) => {
 
 app.all("/locations/*", (req, res) => {});
 
-app.all("/prices/*", (req, res) => {});
+app.all("/prices/*", (req, res) => {
+  proxy.web(req, res, {
+    target: "http://ec2-52-14-136-160.us-east-2.compute.amazonaws.com/"
+  });
+});
 
 app.all("/hotels/*", (req, res) => {
   proxy.web(req, res, {
