@@ -16,7 +16,11 @@ app.all("/api/*", (req, res) => {
   });
 });
 
-app.all("/locations/*", (req, res) => {});
+app.all("/location/*", (req, res) => {
+  proxy.web(req, res, {
+    target: "http://ec2-54-215-233-5.us-west-1.compute.amazonaws.com/"
+  });
+});
 
 app.all("/prices/*", (req, res) => {
   proxy.web(req, res, {
