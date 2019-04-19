@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/rickadviser/gabe-reviews-proxy#readme",
   "dependencies": {
+    "aws-sdk": "^2.439.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "http-proxy": "^1.17.0"

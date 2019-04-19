@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3111;
 const path = require("path");
 const cors = require("cors");
 const httpProxy = require("http-proxy");
@@ -41,3 +41,19 @@ app.all("/header/*", (req, res) => {
 });
 
 app.listen(port, () => console.log(`Proxy server running on port ${port}`));
+
+app.get('/create',(req,res) => {
+  
+});
+
+app.get('/read',(req,res) => {
+  
+});
+
+app.get('/update',(req,res) => {
+  
+});
+
+app.get('/delete',(req,res) => {
+  
+});
