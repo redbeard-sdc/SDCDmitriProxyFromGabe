@@ -1,18 +1,17 @@
-// data
-// "name"
-// "address"
-//  -street
-//  -city
-//  -state
-//  -zipcode
-//  -country
-//  -
-// "description"
-// "phone"
-// "nearest airport"
-// "url"
-// "ranking"
-// "stars"
+// Hotels
+//   "name"
+//   "address"
+//      -street
+//      -city
+//      -state
+//      -zipcode
+//      -country
+//   "description"
+//   "phone"
+//   "nearest airport"
+//   "url"
+//   "ranking"
+//   "stars"
 
 const fs = require('fs');
 const stringify = require('csv-stringify')

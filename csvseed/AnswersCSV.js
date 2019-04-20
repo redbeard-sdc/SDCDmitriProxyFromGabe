@@ -1,4 +1,4 @@
-// answers
+// Answers
 //     user_id
 //     question_id
 //     date
@@ -8,7 +8,7 @@
 const fs = require('fs');
 const stringify = require('csv-stringify')
 const faker = require('faker');
-const {pickEnym,generateRandomNumber, imagesenym} = require("./iterfunctions");
+const {generateRandomNumber} = require("./iterfunctions");
 
 const seedAnswers = (limit) => {
     const data = [];
