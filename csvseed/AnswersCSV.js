@@ -57,10 +57,10 @@ const seedAnswers = (limit, batchsize) => {
             while(count > 0){
                 const batchnum = Math.floor( (limit-count)/batchsize);
                 const databatch = answerBatch(batchnum,batchsize,limit);
-                const apromise = makebatchpromise(databatch,batchnum);
-                promises.push(apromise);
-                count-=batchsize;
-                console.log("started entries: ",limit-count);
+                const databatch = hotelBatch(batchnum,batchsize);
+                makebatchpromise(databatch,batchnum).then(()=>{
+                    count-=batchsize;
+                });
             }
             return promises;
         }
