@@ -56,13 +56,22 @@ const generatePhoto = () => {
     return photo;
 };
 
-const generateRoomTips = () => {
+const RoomTip = () => {
     let roomtip = {}
     roomtip.date = faker.date.past();
     roomtip.tip = faker.lorem.sentence();
     roomtip.rating = Math.round(Math.random() * 5);
     return roomtip;
 };
+
+const generateRoomTips = () => {
+    roomtips = [];
+    var tips = generateRandomNumber(5);
+    for (let i=0; i< tips; i++){
+        roomtips.push(RoomTip());
+    }
+    return roomtips;
+}
 
 const generateRating = () => {
     const rand = Math.ceil(Math.random() * 10);
@@ -83,12 +92,21 @@ const generateRating = () => {
     return rating;
   };
 
-const generateQuestions = () => {
+const Question = () => {
     let question = {}
     question.date = faker.date.between('2019-02-01', '2019-05-31');
     question.question = faker.lorem.sentence();
     return question;
 };
+
+const generateQuestions = () => {
+    questions = [];
+    var tips = generateRandomNumber(5);
+    for (let i = 0; i < tips; i++){
+        questions.push(Question());
+    }
+    return questions;
+}
 
 const seedReviews = (limit) => {
     const data = [];
