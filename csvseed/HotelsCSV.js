@@ -26,11 +26,11 @@ const generateAddress = () => {
     return address;
 };
 
-const seedHotels = (limit) => {
+const hotelBatch = (batchnum,batchsize) => {
     const data = [];
     const dataheader = ['id', 'name', 'address', 'description', 'phone', 'nearestAirport', 'url', 'ranking', 'stars'];
-    for(let i = 0; i < limit; i++) {
-        const id = i;
+    for(let i = 0; i < batchsize; i++) {
+        const id = batchnum*batchsize + i;
         const name = faker.name.findName();
         const address = generateAddress();
         const phone = faker.phone.phoneNumber();
@@ -43,21 +43,55 @@ const seedHotels = (limit) => {
         const entry = [id, name, address, description, phone, nearestAirport, url, ranking, stars];
         data.push(entry);
     }
-    data.unshift(dataheader);
+    return data;
+}
 
-    stringify(data, (err, output) => {
-        if(err){
-            console.log("can't make into csv string",err)
-        } else {
-            fs.writeFile('./files/Hotels.csv', output , function(err){
-                if(err){
-                    console.log("error writing file");
-                } else {
-                    console.log("wrote Hotels.csv file");
-                }
-            });
-        }
+const makebatchpromise = (databatch,batchnum) => {
+    return new Promise((resolve,reject) => {
+        stringify(databatch,(err,output) => {
+            if(err) {
+                console.log(`batch ${batchnum} of hotels failed to stringify`);
+                resolve();
+            } else {
+                fs.appendFile('./files/Hotels.csv',output,function(err){
+                    if(err){
+                        console.log(`batch ${batchnum} of hotels failed to stringify`);
+                        resolve();
+                    } else {
+                        console.log(`wrote batch ${batchnum}`);
+                        resolve();
+                    }
+                })
+            }
+        })
     })
 }
 
+
+const seedHotels = (limit, batchsize) => {
+    var count = limit;
+    const promises = [];
+    const dataheader = ['id', 'name', 'address', 'description', 'phone', 'nearestAirport', 'url', 'ranking', 'stars'];
+    fs.writeFile('./files/Hotels.csv', dataheader, function(err){
+        if(err){
+            console.log('couldnt write header, STOPPING...')
+        } else {
+            console.log('wrote header')
+            while(count > 0){
+                const batchnum = Math.floor( (limit-count)/batchsize);
+                const databatch = hotelBatch(batchnum,batchsize);
+                const apromise = makebatchpromise(databatch,batchnum);
+                promises.push(apromise);
+                count-=batchsize;
+                console.log("started entries: ",limit-count);
+            }
+            return promises;
+        }
+
+    })
+    return [];
+}
+
+const promiselist=seedHotels(10000,100)
+Promise.all(promiselist).then(() => {console.log("done seeding")});
 module.exports = {seedHotels}; 

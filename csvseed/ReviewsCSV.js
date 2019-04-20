@@ -108,13 +108,12 @@ const generateQuestions = () => {
     return questions;
 }
 
-const seedReviews = (limit) => {
+const reviewBatch = (batchnum,batchsize,limit) => {
     const data = [];
-    const dataheader = ['id','userid', 'hotelid','username', 'name' , 'address', 'contributions', 'helpful_votes', 'rating', 'questions', 'photos']
-    for(let i = 0; i < limit; i++) {
+    for(let i = 0; i < batchsize; i++) {
         const hotelid = generateRandomNumber(limit);
         const userid = generateRandomNumber(limit);
-        const id = i;
+        const id =  batchnum * batchsize + i;
         const username = faker.internet.userName();
         const name = faker.name.findName();
         const address = generateAddress();
@@ -124,24 +123,56 @@ const seedReviews = (limit) => {
         const questions = generateQuestions();
         const roomtips = generateRoomTips();
         const photos = generatePhoto();
-        const entry = [id, userid, hotelid, username, name, address, contributions, helpful_votes, rating, questions, photos];
+        const entry = [id, userid, hotelid, username, name, address, contributions,roomtips, helpful_votes, rating, questions, photos];
         data.push(entry);
     }
-    data.unshift(dataheader);
-
-    stringify(data, (err, output) => {
-        if(err){
-            console.log("can't make into csv string",err)
-        } else {
-            fs.writeFile('./files/Reviews.csv', output , function(err){
-                if(err){
-                    console.log("error writing file");
-                } else {
-                    console.log("wrote Reviews.csv file");
-                }
-            });
-        }
+    return data;
+}
+const makebatchpromise = (databatch,batchnum) => {
+    return new Promise((resolve,reject) => {
+        stringify(databatch,(err,output) => {
+            if(err) {
+                console.log(`batch ${batchnum} of hotels failed to stringify`);
+                resolve();
+            } else {
+                fs.appendFile('./files/Reviews.csv',output,function(err){
+                    if(err){
+                        console.log(`batch ${batchnum} of hotels failed to stringify`);
+                        resolve();
+                    } else {
+                        console.log(`wrote batch ${batchnum}`);
+                        resolve();
+                    }
+                })
+            }
+        })
     })
 }
+
+const seedReviews = (limit, batchsize) => {
+    var count = limit;
+    const promises = [];
+    const dataheader = ['id','userid', 'hotelid','username', 'name' , 'address', 'contributions','room_tips', 'helpful_votes', 'rating', 'questions', 'photos']
+    fs.writeFile('./files/Reviews.csv', dataheader, function(err){
+        if(err){
+            console.log('couldnt write header, STOPPING...')
+        } else {
+            console.log('wrote header')
+            while(count > 0){
+                const batchnum = Math.floor( (limit-count)/batchsize);
+                const databatch = reviewBatch(batchnum,batchsize,limit);
+                const apromise = makebatchpromise(databatch,batchnum);
+                promises.push(apromise);
+                count-=batchsize;
+                console.log("started entries: ",limit-count);
+            }
+            return promises;
+        }
+
+    })
+    return [];
+}
+const promiselist=seedReviews(10000,100);
+Promise.all(promiselist).then(() => {console.log("done seeding")});
 
 module.exports = {seedReviews};
