@@ -4,8 +4,8 @@ const {seedHotels} = require("./HotelsCSV");
 const {seedUsers} = require("./UsersCSV");
 
 
-const limit = 10000000;
-batchsize = 10000;
+const limit = 1000;
+batchsize = 10;
 
 const promiseHotels = seedHotels(limit,batchsize);
 Promise.all(promiseHotels).then(() => {console.log("done seeding hotels")});

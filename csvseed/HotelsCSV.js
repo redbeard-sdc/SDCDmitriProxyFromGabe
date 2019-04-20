@@ -92,6 +92,4 @@ const seedHotels = (limit, batchsize) => {
     return [];
 }
 
-const promiselist=seedHotels(10000,100)
-Promise.all(promiselist).then(() => {console.log("done seeding")});
 module.exports = {seedHotels}; 
