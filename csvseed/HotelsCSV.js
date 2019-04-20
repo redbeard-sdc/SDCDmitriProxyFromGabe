@@ -27,9 +27,11 @@ const generateAddress = () => {
     return address;
 };
 
-const seedHotels = () => {
+const seedHotels = (limit) => {
     const data = [];
-    for(let i = 0; i < 3; i++) {
+    const dataheader = ['id', 'name', 'address', 'description', 'phone', 'nearestAirport', 'url', 'ranking', 'stars'];
+    for(let i = 0; i < limit; i++) {
+        const id = i;
         const name = faker.name.findName();
         const address = generateAddress();
         const phone = faker.phone.phoneNumber();
@@ -39,15 +41,11 @@ const seedHotels = () => {
         const ranking = faker.random.number(5); 
         const stars = faker.random.number(5);
 
-        const entry = [name, address, description, phone, nearestAirport, url, ranking, stars];
+        const entry = [id, name, address, description, phone, nearestAirport, url, ranking, stars];
         data.push(entry);
     }
-    // let columns = {
-    //     id: 'id',
-    //     name: 'Name'
-    //     address: ''
-    //   };
-    console.log(data);
+    data.unshift(dataheader);
+
     stringify(data, (err, output) => {
         if(err){
             console.log("can't make into csv string",err)
@@ -62,4 +60,5 @@ const seedHotels = () => {
         }
     })
 }
-seedHotels();
+
+module.exports = {seedHotels}; 
