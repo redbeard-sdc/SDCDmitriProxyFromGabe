@@ -32,7 +32,8 @@ const userBatch = (batchnum,batchsize) => {
     }
     return data
 }
-const makebatchpromise = (databatch,batchnum) => {
+
+var makebatchpromise = (databatch,batchnum) => {
     return new Promise((resolve,reject) => {
         stringify(databatch,(err,output) => {
             if(err) {
@@ -47,34 +48,31 @@ const makebatchpromise = (databatch,batchnum) => {
                         console.log(`wrote batch ${batchnum}`);
                         resolve();
                     }
-                })
+                });
             }
-        })
-    })
+        });
+    });
 }
 
-
-const seedUsers = (limit, batchsize) => {
+function seedUsers(limit, batchsize){
     var count = limit;
-    const promises = [];
     const dataheader = ['id', 'username', 'name', 'address', 'contributions', 'helpful_votes'];
     fs.writeFile('./files/Users.csv', dataheader, function(err){
         if(err){
             console.log('couldnt write header, STOPPING...')
         } else {
-            console.log('wrote header')
-            while(count > 0){
-                const batchnum = Math.floor( (limit-count)/batchsize);
-                const databatch = userBatch(batchnum,batchsize);
-                makebatchpromise(databatch,batchnum).then(()=>{
+            console.log('wrote header');
+            async function seedata(limit,batchsize){
+                while(count > 0){
+                    const batchnum = Math.floor( (limit-count)/batchsize);
+                    let databatch = userBatch(batchnum,batchsize);
+                    await makebatchpromise(databatch,batchnum);
                     count-=batchsize;
-                });
+                }
             }
-            return promises;
+            seedata(limit,batchsize);
         }
-
     })
-    return [];
 }
 
 module.exports = {seedUsers};

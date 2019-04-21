@@ -128,7 +128,8 @@ const reviewBatch = (batchnum,batchsize,limit) => {
     }
     return data;
 }
-const makebatchpromise = (databatch,batchnum) => {
+
+var makebatchpromise = (databatch,batchnum) => {
     return new Promise((resolve,reject) => {
         stringify(databatch,(err,output) => {
             if(err) {
@@ -143,34 +144,31 @@ const makebatchpromise = (databatch,batchnum) => {
                         console.log(`wrote batch ${batchnum}`);
                         resolve();
                     }
-                })
+                });
             }
-        })
-    })
+        });
+    });
 }
 
-const seedReviews = (limit, batchsize) => {
+function seedReviews(limit, batchsize){
     var count = limit;
-    const promises = [];
     const dataheader = ['id','userid', 'hotelid','username', 'name' , 'address', 'contributions','room_tips', 'helpful_votes', 'rating', 'questions', 'photos']
     fs.writeFile('./files/Reviews.csv', dataheader, function(err){
         if(err){
             console.log('couldnt write header, STOPPING...')
         } else {
             console.log('wrote header')
-            while(count > 0){
-                const batchnum = Math.floor( (limit-count)/batchsize);
-                const databatch = reviewBatch(batchnum,batchsize,limit);
-                const databatch = hotelBatch(batchnum,batchsize);
-                makebatchpromise(databatch,batchnum).then(()=>{
+            async function seeddata(limit, batchsize){
+                while(count > 0){
+                    const batchnum = Math.floor( (limit-count)/batchsize);
+                    const databatch = reviewBatch(batchnum,batchsize,limit);
+                    await makebatchpromise(databatch,batchnum)
                     count-=batchsize;
-                });
+                }
             }
-            return promises;
+            seeddata(limit,batchsize);
         }
-
-    })
-    return [];
+    });
 }
 
 module.exports = {seedReviews};
