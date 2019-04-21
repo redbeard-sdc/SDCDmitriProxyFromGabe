@@ -16,7 +16,7 @@ const answerBatch = (batchnum,batchsize,limit) => {
         const userid = generateRandomNumber(limit);
         const id = batchsize* batchnum + i;
         const date = faker.date.between('2019-02-01', '2019-05-31');
-        const answer = faker.lorem.sentence();
+        const answer = faker.lorem.words(2);
         const votes = faker.random.number(10000);
         const entry = [id, userid, date, answer, votes];
         data.push(entry);

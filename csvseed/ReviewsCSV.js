@@ -40,10 +40,10 @@ const generateAddress = () => {
 
 const generatePhoto = () => {
     const photo = {};
-    const num = generateRandomNumber(8);
+    const num = generateRandomNumber(1);
     photo.url = pickEnym(imagesenym);
     photo.date = faker.date.between('2019-02-01', '2019-05-31');
-    photo.description = faker.lorem.paragraph();
+    photo.description = faker.lorem.words(2);
     photo.likes = generateRandomNumber(1000);
     photo.category = pickEnym([
         'Traveler',
@@ -59,14 +59,14 @@ const generatePhoto = () => {
 const RoomTip = () => {
     let roomtip = {}
     roomtip.date = faker.date.past();
-    roomtip.tip = faker.lorem.sentence();
+    roomtip.tip = faker.lorem.words(2);
     roomtip.rating = Math.round(Math.random() * 5);
     return roomtip;
 };
 
 const generateRoomTips = () => {
     roomtips = [];
-    var tips = generateRandomNumber(5);
+    var tips = generateRandomNumber(2);
     for (let i=0; i< tips; i++){
         roomtips.push(RoomTip());
     }
@@ -95,13 +95,13 @@ const generateRating = () => {
 const Question = () => {
     let question = {}
     question.date = faker.date.between('2019-02-01', '2019-05-31');
-    question.question = faker.lorem.sentence();
+    question.question = faker.lorem.words(2);
     return question;
 };
 
 const generateQuestions = () => {
     questions = [];
-    var tips = generateRandomNumber(5);
+    var tips = generateRandomNumber(2);
     for (let i = 0; i < tips; i++){
         questions.push(Question());
     }

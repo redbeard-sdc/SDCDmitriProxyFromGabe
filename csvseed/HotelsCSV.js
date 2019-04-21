@@ -35,7 +35,7 @@ const hotelBatch = (batchnum,batchsize) => {
         const address = generateAddress();
         const phone = faker.phone.phoneNumber();
         const url = faker.internet.url(); 
-        const description = faker.lorem.sentence();
+        const description = faker.lorem.words(2);
         const nearestAirport = faker.lorem.word() + " Airport";
         const ranking = faker.random.number(5); 
         const stars = faker.random.number(5);
