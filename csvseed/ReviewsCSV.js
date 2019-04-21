@@ -40,7 +40,7 @@ const generateAddress = () => {
 
 const generatePhoto = () => {
     const photo = {};
-    const num = generateRandomNumber(1);
+    // const num = generateRandomNumber(3);
     photo.url = pickEnym(imagesenym);
     photo.date = faker.date.between('2019-02-01', '2019-05-31');
     photo.description = faker.lorem.words(2);
@@ -66,7 +66,7 @@ const RoomTip = () => {
 
 const generateRoomTips = () => {
     roomtips = [];
-    var tips = generateRandomNumber(2);
+    var tips = generateRandomNumber(3);
     for (let i=0; i< tips; i++){
         roomtips.push(RoomTip());
     }
@@ -101,7 +101,7 @@ const Question = () => {
 
 const generateQuestions = () => {
     questions = [];
-    var tips = generateRandomNumber(2);
+    var tips = generateRandomNumber(3);
     for (let i = 0; i < tips; i++){
         questions.push(Question());
     }
