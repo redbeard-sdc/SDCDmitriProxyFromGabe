@@ -37,15 +37,15 @@ var makebatchpromise = (databatch,batchnum) => {
     return new Promise((resolve,reject) => {
         stringify(databatch,(err,output) => {
             if(err) {
-                console.log(`batch ${batchnum} of hotels failed to stringify`);
+                console.log(`batch ${batchnum} of users failed to stringify`);
                 resolve();
             } else {
                 fs.appendFile('./files/Users.csv',output,function(err){
                     if(err){
-                        console.log(`batch ${batchnum} of hotels failed to stringify`);
+                        console.log(`batch ${batchnum} of users failed to write`);
                         resolve();
                     } else {
-                        console.log(`wrote batch ${batchnum}`);
+                        console.log(`wrote batch ${batchnum} of users`);
                         resolve();
                     }
                 });

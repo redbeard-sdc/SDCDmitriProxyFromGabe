@@ -55,10 +55,10 @@ var makebatchpromise = (databatch,batchnum) => {
             } else {
                 fs.appendFile('./files/Hotels.csv',output,function(err){
                     if(err){
-                        console.log(`batch ${batchnum} of hotels failed to stringify`);
+                        console.log(`batch ${batchnum} of hotels failed to write`);
                         resolve();
                     } else {
-                        console.log(`wrote batch ${batchnum}`);
+                        console.log(`wrote batch ${batchnum} of hotels`);
                         resolve();
                     }
                 });
