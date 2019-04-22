@@ -1,6 +1,7 @@
 
 #Other components
 repos/
+*.csv
 
 # Logs
 logs
