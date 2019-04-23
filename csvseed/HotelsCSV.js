@@ -28,7 +28,6 @@ const generateAddress = () => {
 
 const hotelBatch = (batchnum,batchsize) => {
     const data = [];
-    const dataheader = ['id', 'name', 'address', 'description', 'phone', 'nearestAirport', 'url', 'ranking', 'stars'];
     for(let i = 0; i < batchsize; i++) {
         const id = batchnum*batchsize + i;
         const name = faker.name.findName();
@@ -70,7 +69,7 @@ var makebatchpromise = (databatch,batchnum) => {
 
 function seedHotels(limit, batchsize) {
     var count = limit;
-    const dataheader = ['id', 'name', 'address', 'description', 'phone', 'nearestAirport', 'url', 'ranking', 'stars'];
+    const dataheader = ['id', 'name', 'address', 'description', 'phone', 'nearestAirport', 'url', 'ranking', 'stars\n'];
     fs.writeFile('./files/Hotels.csv', dataheader, function(err){
         if(err){
             console.log('couldnt write header, STOPPING...')

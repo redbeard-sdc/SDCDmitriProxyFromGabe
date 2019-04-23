@@ -152,7 +152,7 @@ var makebatchpromise = (databatch,batchnum) => {
 
 function seedReviews(limit, batchsize){
     var count = limit;
-    const dataheader = ['id','userid', 'hotelid','username', 'name' , 'address', 'contributions','room_tips', 'helpful_votes', 'rating', 'questions', 'photos']
+    const dataheader = ['id','userid', 'hotelid','username', 'name' , 'address', 'contributions','room_tips', 'helpful_votes', 'rating', 'questions', 'photos\n']
     fs.writeFile('./files/Reviews.csv', dataheader, function(err){
         if(err){
             console.log('couldnt write header, STOPPING...')
