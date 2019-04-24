@@ -1,0 +1,5 @@
+seeddatausers = () => {
+    
+}
+
+module.exports = {seeddatausers};
