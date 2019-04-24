@@ -21,6 +21,7 @@
   "dependencies": {
     "aws-sdk": "^2.439.0",
     "cors": "^2.8.5",
+    "couchimport": "^1.1.2",
     "csv-parser": "^2.2.0",
     "csv-stringify": "^5.3.0",
     "express": "^4.16.4",

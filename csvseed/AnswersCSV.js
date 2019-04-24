@@ -6,7 +6,7 @@
 //     votes
 
 const fs = require('fs');
-const stringify = require('csv-stringify')
+const stringify = require('csv-stringify');
 const faker = require('faker');
 const {generateRandomNumber} = require("./iterfunctions");
 
@@ -14,7 +14,7 @@ const answerBatch = (batchnum,batchsize,limit) => {
     const data = [];
     for(let i = 0; i < batchsize; i++) {
         const userid = generateRandomNumber(limit);
-        const id = batchsize* batchnum + i;
+        const id = batchsize * batchnum + i;
         const date = faker.date.between('2019-02-01', '2019-05-31');
         const answer = faker.lorem.words(2);
         const votes = faker.random.number(10000);

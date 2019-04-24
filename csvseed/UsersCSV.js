@@ -24,10 +24,11 @@ const userBatch = (batchnum,batchsize) => {
         const id = batchnum * batchsize + i;
         const username = faker.internet.userName();
         const name = faker.name.findName();
-        const address = generateAddress();
+        const city = faker.address.city();
+        const state = faker.address.state();
         const contributions = faker.random.number(10000); 
         const helpful_votes = faker.random.number(10000);
-        const entry = [id, username, name, address, contributions, helpful_votes];
+        const entry = [id, username, name, city, state, contributions, helpful_votes];
         data.push(entry);
     }
     return data
@@ -56,7 +57,7 @@ var makebatchpromise = (databatch,batchnum) => {
 
 function seedUsers(limit, batchsize){
     var count = limit;
-    const dataheader = ['id', 'username', 'name', 'address', 'contributions', 'helpful_votes\n'];
+    const dataheader = ['id', 'username', 'name','city' ,'state' , 'contributions', 'helpful_votes\n'];
     fs.writeFile('./files/Users.csv', dataheader, function(err){
         if(err){
             console.log('couldnt write header, STOPPING...')

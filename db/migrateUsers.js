@@ -3,44 +3,61 @@ const fs = require('fs')
 const path  = require('path');
 const AWS = require("aws-sdk");
 const makeUserTable = require("./models/User").makeUsertable;
+const deleteUserTable = require("./models/User").deleteUsertable;
 AWS.config.update({
   region: "us-east-1",
   endpoint: "http://localhost:8000"
 });
 
 var docClient = new AWS.DynamoDB.DocumentClient();
-
+var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'})
 
 //['id', 'username', 'name', 'address', 'contributions', 'helpful_votes'];
 
+deleteUserTable();
 makeUserTable();
 console.log("made table");
+const batchsize = 25;
+let batch = [];
 fs.createReadStream(path.join(__dirname,"../csvseed/files/Users.csv"))
   .pipe(csv())
   .on('data', (data) =>{
-    async function additem(){
+    batch.push(data);
+    async function additem(batch){
       var params = {
-        TableName: "Users",
-        Item: {
-          "id":parseInt(data.id),
-          "username":data.username,
-          "name":data.name,
-          "address":data.address,
-          "contributions":data.contributions,
-          "helpful_votes":data.helpful_votes
+        RequestItems: {
+          "Users": []
         }
       }
-      await docClient.put(params, function(err, response) {
+      for(item of batch){
+        const req = {
+          PutRequest: {
+            Item: {
+              "id":{"S":item.id},
+              "username":{"S":item.username},
+              "name":{"S":item.name},
+              "address":{"S":item.address},
+              "contributions":{"S":item.contributions},
+              "helpful_votes":{"S":item.helpful_votes}
+            }
+          }
+        }
+        params.RequestItems["Users"].push(req);
+      }
+      await ddb.batchWriteItem(params, function(err, response) {
         //console.log(data);
         if (err) {
             console.error("Unable to add user", ". Error JSON:", JSON.stringify(err, null, 2));
             //throw err;
         } else {
-            console.log("PutItem succeeded:", data.id);
+            console.log("PutItem succeeded batch:", Math.floor(data.id/batchsize));
         }
       });
     }
-    additem();
+    if(batch.length === batchsize){
+      additem(batch);
+      batch= [];
+    }
   })
 
 
