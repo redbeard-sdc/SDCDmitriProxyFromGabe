@@ -37,7 +37,8 @@ const roomtipBatch = (batchnum,batchsize,limit) => {
         const id =  batchnum * batchsize + i;
         const tip = faker.lorem.words(2);
         const rating = Math.round(Math.random() * 5);
-        const entry = [id, reviewid, tip, rating];
+        const date = faker.date.between('2019-02-01', '2019-05-31');
+        const entry = [id, reviewid, date, tip, rating];
         data.push(entry);
     }
     return data;
@@ -66,7 +67,7 @@ var makebatchpromise = (databatch,batchnum) => {
 
 function seedRoomTips(limit, batchsize){
     var count = limit;
-    const dataheader = ['id','userid', 'hotelid','username', 'name' , 'city', 'state', 'contributions','room_tips', 'helpful_votes', 'rating', 'questions', 'photos\n']
+    const dataheader = ['id', 'reviewid', 'date', 'tip', 'rating\n']
     fs.writeFile('./files/RoomTips.csv', dataheader, function(err){
         if(err){
             console.log('couldnt write header, STOPPING...')

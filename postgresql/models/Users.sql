@@ -10,4 +10,15 @@ CREATE Table users(
 );
 
 COPY users(id,username,personname,city,astate,contributions,helpful_votes) 
-FROM '/User.csv' DELIMITER ',' CSV HEADER;
+FROM '/Users.csv' DELIMITER ',' CSV HEADER;
+
+-- Users
+--   username
+--   name
+--     -first_name
+--     -last_nam
+--   location
+--     -city
+--     -state
+--   contributions
+--   helpful_votes

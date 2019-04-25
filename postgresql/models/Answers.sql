@@ -2,9 +2,17 @@ DROP TABLE IF EXISTS answers;
 CREATE Table answers(
     id serial PRIMARY KEY,
     userid integer,
-    adate integer,
+    adate bigint,
+    answer varchar(255),
     votes integer
 );
 
-COPY users(id,username,personname,city,astate,contributions,helpful_votes) 
-FROM '/Answer.csv' DELIMITER ',' CSV HEADER;
+COPY answers(id, userid, adate, answer, votes)
+FROM '/Answers.csv' DELIMITER ',' CSV HEADER;
+
+--  Answers
+--      -user_id
+--      -question_id
+--      -date
+--      -answer
+--      -votes

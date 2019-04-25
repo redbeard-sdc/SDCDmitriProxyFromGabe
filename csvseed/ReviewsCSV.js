@@ -1,21 +1,16 @@
 //  reviews
-//     user_id
-//     hotel_id
-//     date
-//     language
-//     title
-//     description
-//     traveler_type
-//     ratings:
-//          - overall
-//          - location
-//          - cleanliness
-//          - service
-//          - sleep_quality
-//     roomTips
-//          - date
-//          - tip
-//          - rating
+//     -user_id
+//     -hotel_id
+//     -date
+//     -language
+//     -title
+//     -description
+//     -traveler_type
+//     - overall
+//     - location
+//     - cleanliness
+//     - service
+//     - sleep_quality
 
 const fs = require('fs');
 const stringify = require('csv-stringify')
@@ -43,22 +38,6 @@ const generateRating = () => {
     return rating;
   };
 
-const Question = () => {
-    let question = {}
-    question.date = faker.date.between('2019-02-01', '2019-05-31');
-    question.question = faker.lorem.words(2);
-    return question;
-};
-
-const generateQuestions = () => {
-    questions = [];
-    var tips = generateRandomNumber(3);
-    for (let i = 0; i < tips; i++){
-        questions.push(Question());
-    }
-    return questions;
-}
-
 const reviewBatch = (batchnum,batchsize,limit) => {
     const data = [];
     for(let i = 0; i < batchsize; i++) {
@@ -69,10 +48,16 @@ const reviewBatch = (batchnum,batchsize,limit) => {
         const name = faker.name.findName();
         const city = faker.address.city();
         const state = faker.address.state();
-        const contributions = faker.random.number(10000); 
+        const date = faker.date.between('2019-02-01', '2019-05-31');
+        const description = faker.lorem.words(2)
         const helpful_votes = faker.random.number(10000);
+        const language = pickEnym(["English","Spanish","Dutch","Russian"])
         const rating = generateRating();
-        const entry = [id, userid, hotelid, username, name, city, state, contributions, helpful_votes];
+        const locationrating = generateRating();
+        const cleaninessrating = generateRating();
+        const servicerating = generateRating();
+        const sleepquality = generateRating();
+        const entry = [id, userid, hotelid, username, name, city, state, date, description, language, helpful_votes,rating,locationrating, cleaninessrating, servicerating, sleepquality];
         data.push(entry);
     }
     return data;
@@ -101,7 +86,7 @@ var makebatchpromise = (databatch,batchnum) => {
 
 function seedReviews(limit, batchsize){
     var count = limit;
-    const dataheader = ['id','userid', 'hotelid','username', 'name' , 'city', 'state', 'contributions','room_tips', 'helpful_votes', 'rating', 'questions', 'photos\n']
+    const dataheader = ['id', 'userid', 'hotelid', 'username', 'name', 'city', 'state', 'date', 'description', 'language', 'helpful_votes', 'rating', 'locationrating', 'cleaninessrating', 'servicerating', 'sleepquality\n'];
     fs.writeFile('./files/Reviews.csv', dataheader, function(err){
         if(err){
             console.log('couldnt write header, STOPPING...')

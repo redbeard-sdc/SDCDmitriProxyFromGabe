@@ -1,5 +1,5 @@
-DROP TABLE IF EXISTS answers;
-CREATE Table answers(
+DROP TABLE IF EXISTS hotels;
+CREATE Table hotels(
     id serial PRIMARY KEY,
     aname varchar(255),
     street varchar(255),
@@ -15,5 +15,5 @@ CREATE Table answers(
     stars integer
 );
 
-COPY users(id,username,personname,city,astate,contributions,helpful_votes) 
-FROM '/Hotel.csv' DELIMITER ',' CSV HEADER;
+COPY hotels(id,aname,street,city,astate,zip,country,adescription,phone,nearest_airport,aurl,ranking,stars) 
+FROM '/Hotels.csv' DELIMITER ',' CSV HEADER;
