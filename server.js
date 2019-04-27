@@ -10,7 +10,7 @@ const proxy = httpProxy.createProxyServer({});
 app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
-app.all("/", (req, res) => {
+app.all("/api/*", (req, res) => {
   console.log("hi");
   proxy.web(req, res, {
     target: "http://localhost:3100"
