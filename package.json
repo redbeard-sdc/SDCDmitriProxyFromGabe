@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/rickadviser/gabe-reviews-proxy#readme",
   "dependencies": {
+    "artillery": "^1.6.0-27",
     "aws-sdk": "^2.439.0",
     "cors": "^2.8.5",
     "couchimport": "^1.1.2",
@@ -28,6 +29,7 @@
     "faker": "^4.1.0",
     "file-system": "^2.2.2",
     "http-proxy": "^1.17.0",
+    "newrelic": "^5.7.0",
     "path": "^0.12.7"
   }
 }
