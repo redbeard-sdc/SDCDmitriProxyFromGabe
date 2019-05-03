@@ -11,9 +11,8 @@ app.use(cors());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.all("/api/*", (req, res) => {
-  console.log("hi");
   proxy.web(req, res, {
-    target: "http://localhost:3100"
+    target: "http://sdcclientloadbalancer-b59199a088402128.elb.us-east-1.amazonaws.com"
   });
 });
 
